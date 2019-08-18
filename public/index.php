@@ -24,7 +24,7 @@ include_once __DIR__ . '/../vendor/autoload.php';
             
             var AI;
             $(document).ready(function () {
-                AI = new ajaxInterface({helloModal: true, defaultLibrary: 'fancybox'});
+                AI = singleAjaxInterface.getInstance({defaultLibrary: 'fancybox'});
             });
             
             $(document).ready(function () {
@@ -43,6 +43,10 @@ include_once __DIR__ . '/../vendor/autoload.php';
                 alert('test');
             }
             
+            function test2() {
+                alert('test2');
+            }
+            
             function call1() {
                 let data = {
                     action: 'test'
@@ -52,7 +56,8 @@ include_once __DIR__ . '/../vendor/autoload.php';
             
             function call2() {
                 let data = {
-                    action: 'testUnknown'
+                    action: 'testUnknown',
+                    callback: clb
                 }
                 AI.send('/ajax.php', data);
             }
@@ -67,6 +72,8 @@ include_once __DIR__ . '/../vendor/autoload.php';
             
             function clb(response) {
                 AI.simpleInfoMessage(response.message, 'Success', true);
+                console.log('index clb AI.getErrors:');
+                console.log(AI.getErrors());
             }
         </script>
         <h1>AI Test</h1>
